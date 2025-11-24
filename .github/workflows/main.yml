@@ -24,9 +24,3 @@ jobs:
       - name: Run ETL
         run: |
           python ETL.py
-
-      - name: Upload DB artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: agg_result
-          path: agg_result.db
