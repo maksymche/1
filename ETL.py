@@ -53,10 +53,6 @@ agg1 = df.groupby(
 conn = sqlite3.connect("agg_result2.db")
 cursor = conn.cursor()
 
-# шлях до репозиторію (тут - поточна папка)
-repo_dir = Path(__file__).parent
-db_path = repo_dir / "agg_result.db"
-
 
 # Створення таблиці, якщо ще не існує
 cursor.execute("""
@@ -82,4 +78,5 @@ conn.close()
 
 
 print("Дані успішно завантажені у таблицю agg_trades_weekly")
+
 
