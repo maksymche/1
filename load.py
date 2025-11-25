@@ -1,11 +1,9 @@
-
-
 # підключення до бази
-conn = sqlite3.connect("agg_result2.db")
+conn = sqlite3.connect("agg_result.db")
 cursor = conn.cursor()
 
 
-# Створення таблиці, якщо ще не існує
+# cтворення таблиці, якщо її ще не існує
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS agg_trades_weekly (
     week_start_date TEXT,
@@ -20,12 +18,9 @@ CREATE TABLE IF NOT EXISTS agg_trades_weekly (
 conn.commit()
 
 
-# Завантаження DataFrame у таблицю (replace=True - перезаписує таблицю)
-agg1.to_sql("agg_trades_weekly", conn, if_exists="replace", index=False)
+# завантаження DataFrame у таблицю
+agg.to_sql("agg_trades_weekly", conn, if_exists="replace", index=False)
 
 
-# Закриття з'єднання
+# закриття з'єднання
 conn.close()
-
-
-print("Дані успішно завантажені у таблицю agg_trades_weekly")
