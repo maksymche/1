@@ -24,3 +24,11 @@ jobs:
       - name: Run ETL
         run: |
           python ETL.py
+
+      - name: Commit DB to repository
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add agg_result2.db
+          git commit -m "Update database"
+          git push
