@@ -41,15 +41,15 @@
   Как бы вы адаптировали решение под 100+ млн строк:
 ■ Какие технологии замените/добавите?
     
-    Pandas не дуже добре масштабується на сотні мільйонів рядків, тому що висока пам’ять і повільна обробка.
-    
-    SQLite та локальні Excel-файли не підходять для великих обсягів.
-    
-    Я б замінив Pandas на Dask, Polars або PySpark.
-    
-    SQLite - на PostgreSQL, ClickHouse, або BigQuery.
-    
-    Excel/CSV - на Parquet або Feather.
+Pandas не дуже добре масштабується на сотні мільйонів рядків, тому що висока пам’ять і повільна обробка.
+
+SQLite та локальні Excel-файли не підходять для великих обсягів.
+
+Я б замінив Pandas на Dask, Polars або PySpark.
+
+SQLite - на PostgreSQL, ClickHouse, або BigQuery.
+
+Excel/CSV - на Parquet або Feather.
 
 
 
