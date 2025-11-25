@@ -19,8 +19,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas
+          pip install pandas openpyxl
 
       - name: Run ETL
         run: |
           python ETL.py
+
+      - name: Upload ETL results
+        uses: actions/upload-artifact@v3
+        with:
+          name: etl-results
+          path: |
+            agg_result.db
+            output/
