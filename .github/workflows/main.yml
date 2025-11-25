@@ -26,7 +26,7 @@ jobs:
           python ETL.py
 
       - name: Upload ETL results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: etl-results
           path: |
