@@ -1,14 +1,15 @@
 import pandas as pd
 
-# Читаємо CSV (тут файл у тій же папці, що і .py)
+
+# зчитуємо CSV
 df = pd.read_csv("trades.csv")
 
-# Подивитися перші 5 рядків
-print(df.head())
 
 
 
-##########
+
+#########
+
 
 
 
@@ -22,7 +23,7 @@ import pandas as pd
 df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
 
 
-# 2. Видаляємо рядки з NaT
+# видаляємо рядки з NaT
 df = df.dropna(subset=["timestamp"])
 
 
@@ -30,10 +31,9 @@ df = df.dropna(subset=["timestamp"])
 df["week_start_date"] = df["timestamp"] - df["timestamp"].dt.weekday * pd.Timedelta(days=1)
 df["week_start_date"] = df["week_start_date"].dt.date
 
-print(df["week_start_date"])
 
 # агрегація
-agg1 = df.groupby(
+agg = df.groupby(
     ["week_start_date", "client_type", "user_id", "symbol"]
 ).agg(
     total_volume=("quantity", "sum"),
@@ -44,17 +44,18 @@ agg1 = df.groupby(
 
 
 
-##########
+######
+
 
 
 
 
 # підключення до бази
-conn = sqlite3.connect("agg_result2.db")
+conn = sqlite3.connect("agg_result.db")
 cursor = conn.cursor()
 
 
-# Створення таблиці, якщо ще не існує
+# cтворення таблиці, якщо її ще не існує
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS agg_trades_weekly (
     week_start_date TEXT,
@@ -69,14 +70,9 @@ CREATE TABLE IF NOT EXISTS agg_trades_weekly (
 conn.commit()
 
 
-# Завантаження DataFrame у таблицю (replace=True - перезаписує таблицю)
-agg1.to_sql("agg_trades_weekly", conn, if_exists="replace", index=False)
+# завантаження DataFrame у таблицю
+agg.to_sql("agg_trades_weekly", conn, if_exists="replace", index=False)
 
 
-# Закриття з'єднання
+# закриття з'єднання
 conn.close()
-
-
-print("Дані успішно завантажені у таблицю agg_trades_weekly")
-
-
