@@ -7,7 +7,7 @@ import pandas as pd
 df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
 
 
-# 2. Видаляємо рядки з NaT
+# видаляємо рядки з NaT
 df = df.dropna(subset=["timestamp"])
 
 
@@ -15,10 +15,9 @@ df = df.dropna(subset=["timestamp"])
 df["week_start_date"] = df["timestamp"] - df["timestamp"].dt.weekday * pd.Timedelta(days=1)
 df["week_start_date"] = df["week_start_date"].dt.date
 
-print(df["week_start_date"])
 
 # агрегація
-agg1 = df.groupby(
+agg = df.groupby(
     ["week_start_date", "client_type", "user_id", "symbol"]
 ).agg(
     total_volume=("quantity", "sum"),
